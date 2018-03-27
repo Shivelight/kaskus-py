@@ -120,6 +120,19 @@ class ForumResponse(Model):
     visible = StringType()
 
 
+class LocationResponse(Model):
+
+    class Location(Model):
+        id = StringType()
+        name = StringType()
+
+    class Meta(Model):
+        last_update = LongType()
+
+    data = ListType(ModelType(Location))
+    meta = ModelType(Meta)
+
+
 class HotThreadResponse(Model):
     display_name = StringType()
     first_post_id = StringType()
@@ -211,7 +224,11 @@ class SimpleFeedbackResponse(Model):
     positive = IntType()
 
 
-class ThreadResponse(Model):
+class SectionItemResponse(Model):
+    section_item_type = StringType()
+
+
+class ThreadResponse(SectionItemResponse):
 
     class ShippingResponse(Model):
         custom_methods = ListType(StringType)
@@ -225,6 +242,7 @@ class ThreadResponse(Model):
     content = ModelType(ContentResponse)
     creator = BooleanType()
     dateline = LongType()
+    description = StringType()
     discount = FloatType()
     discounted_price = LongType()
     display_name = StringType()
@@ -250,6 +268,7 @@ class ThreadResponse(Model):
     item_condition = StringType()
     item_location = StringType()
     item_price = LongType()
+    joindate = LongType()
     last_post = LongType()
     last_post_id = StringType()
     last_post_userid = StringType()
@@ -260,6 +279,7 @@ class ThreadResponse(Model):
     parent_list = StringType()
     payment_mechanism = ListType(StringType)
     poll = ModelType(PollResponse)
+    poll_id = IntType()
     post_id = StringType()
     post_title = StringType()
     post_userid = StringType()
@@ -286,9 +306,11 @@ class ThreadResponse(Model):
     thread_type = IntType()
     thumbnail_compact = StringType()
     title = StringType()
+    url = StringType()
     usergroupid = StringType()
     usertitle = StringType()
     views = LongType()
+    visible = IntType()
     vote_num = LongType()
     vote_total = LongType()
 
@@ -368,6 +390,11 @@ class SearchThreadResponse(SearchMetaResponse):
     item = ListType(ModelType(ThreadResponse))
     querytime = FloatType()
     start = IntType()
+
+
+class SmileyResponse(Model):
+    text = StringType()
+    url = StringType()
 
 
 class SpecialEventResponse(Model):

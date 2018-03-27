@@ -24,14 +24,34 @@ class Kaskus(object):
         headers.update(HEADERS)
         result = requests.get(uri, headers=headers)
         if result.status_code != 200:
-            raise ErrorResponse(**result.json())
+            try:
+                e = ErrorResponse(**result.json())
+                raise e
+            except ValueError:
+                result.raise_for_status()
         return result.json()
 
     # Content
 
+    def getCountries(self):
+        r = self._get("/v1/content/countries")
+        return LocationResponse(r)
+
     def getDbUpdate(self):
         r = self._get("/v1/dbupdate")
         return DbUpdateResponse(r)
+
+    def getHighlights(self):
+        r = self._get("/content/highlight")
+        return [HighlightResponse(x) for x in r]
+
+    def getProvincesForum(self):
+        r = self._get("/v1/content/locations")
+        return LocationResponse(r)
+
+    def getSmileys(self):
+        r = self._get("/content/smiley_mobile")
+        return [SmileyResponse(x) for x in r]
 
     # Forum
 
