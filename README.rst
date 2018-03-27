@@ -17,6 +17,11 @@ Download or clone this repository and run:
 
     python setup.py install
 
+or via pip:
+
+::
+
+    pip install kaskuspy
 
 Features
 --------
