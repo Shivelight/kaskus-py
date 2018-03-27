@@ -30,7 +30,7 @@ def generate_param(key):
         "oauth_consumer_key": key,
         "oauth_nonce": generate_nonce(),
         "oauth_signature_method": "HMAC-SHA1",
-        "oauth_timestamp": int(time.time() - 30000),
+        "oauth_timestamp": int(time.time()),
         "oauth_version": "1.0"
     }
 
