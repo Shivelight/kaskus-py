@@ -15,7 +15,7 @@ URL = 'https://github.com/cwkfr/kaskus-py'
 EMAIL = 'cwkfr@protonmail.com'
 AUTHOR = 'Arkie'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 REQUIRED = [
     'requests', 'schematics'

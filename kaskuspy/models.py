@@ -27,8 +27,7 @@ class Model(schematics.models.Model):
         return repr(self)
 
     def __repr__(self):
-        __ = ", ".join(["{key}={value}".format(key=k, value=v)
-                       for k, v in self._data.items()])
+        __ = ", ".join([f"{k}={v}" for k, v in self._data.items()])
         return f"{self.__class__.__name__}({__})"
 
 
