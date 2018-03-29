@@ -14,15 +14,32 @@ HEADERS = {
 class Kaskus(object):
     """A Kaskus private API wrapper"""
 
-    def __init__(self):
+    def __init__(self, token='', token_secret=''):
         self.key = "52f7b01bce2f078a32d6b607e9af62"
         self.secret = "38141e11206bbe0cb6b751280634b0"
+        self.token = token
+        self.token_secret = token_secret
 
     def _get(self, path):
         uri = f"{API_BASE}{path}"
-        headers = prepare(uri, "GET", self.key, self.secret)
+        headers = prepare(uri, "GET", self.key, self.secret, self.token,
+                          self.token_secret)
         headers.update(HEADERS)
         result = requests.get(uri, headers=headers)
+        if result.status_code != 200:
+            try:
+                e = ErrorResponse(**result.json())
+                raise e
+            except ValueError:
+                result.raise_for_status()
+        return result.json()
+
+    def _post(self, path, data):
+        uri = f"{API_BASE}{path}"
+        headers = prepare(uri, "POST", self.key, self.secret, self.token,
+                          self.token_secret, data)
+        headers.update(HEADERS)
+        result = requests.post(uri, headers=headers, data=data)
         if result.status_code != 200:
             try:
                 e = ErrorResponse(**result.json())

@@ -8,10 +8,11 @@ from schematics.types import (
 
 class ErrorResponse(Exception):
 
-    def __init__(self, error, errorcode, errormessage):
+    def __init__(self, error, errorcode, errormessage, errordetails):
         self.error = error
         self.errorcode = errorcode
         self.errormessage = errormessage
+        self.errordetails = errordetails
 
     def __str__(self):
         return repr(self)

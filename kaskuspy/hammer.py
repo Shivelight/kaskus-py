@@ -35,7 +35,10 @@ def generate_param(key):
     }
 
 
-def generate_base_string(method, uri, parameters):
+def generate_base_string(method, uri, parameters, data):
+    if data is None:
+        data = {}
+
     parsed = urlparse(uri)
     base_string_uri = quote("{}://{}{}".format(parsed.scheme, parsed.netloc,
                                                parsed.path), "")
@@ -45,11 +48,15 @@ def generate_base_string(method, uri, parameters):
     request_param = [
         urlencode([p], quote_via=quote) for p in parameters.items()
     ]
-    normalized_param = quote('&'.join(sorted(uri_param + request_param)), "")
+    data_param = [
+        urlencode([p], quote_via=quote) for p in data.items()
+    ]
+    params = uri_param + request_param + data_param
+    normalized_param = quote('&'.join(sorted(params)), "")
     return "{}&{}&{}".format(method, base_string_uri, normalized_param)
 
 
-def generate_signature(base_string, consumer_secret, token_secret=''):
+def generate_signature(base_string, consumer_secret, token_secret):
     hmac_key = "{}&{}".format(quote(consumer_secret), token_secret)
     signature_hash = hmac.new(hmac_key.encode(), base_string.encode(), sha1)
     return quote(b64encode(signature_hash.digest()).decode())
@@ -62,9 +69,11 @@ def generate_header(parameters):
     return "OAuth {}".format(', '.join(oauth_param))
 
 
-def prepare(uri, method, key, consumer_secret, token_secret=''):
+def prepare(uri, method, key, consumer_secret, token, token_secret, data=None):
         param = generate_param(key)
-        base = generate_base_string(method, uri, param)
+        if token:
+            param['oauth_token'] = token
+        base = generate_base_string(method, uri, param, data)
         sign = generate_signature(base, consumer_secret, token_secret)
         param['oauth_signature'] = sign
         return {"Authorization": generate_header(param)}
