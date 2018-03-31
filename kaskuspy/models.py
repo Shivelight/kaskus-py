@@ -8,7 +8,8 @@ from schematics.types import (
 
 class ErrorResponse(Exception):
 
-    def __init__(self, error, errorcode, errormessage, errordetails):
+    def __init__(self, error=None, errorcode=None, errormessage=None,
+                 errordetails=None):
         self.error = error
         self.errorcode = errorcode
         self.errormessage = errormessage
@@ -18,8 +19,11 @@ class ErrorResponse(Exception):
         return repr(self)
 
     def __repr__(self):
-        return "ErrorResponse(error={}, errorcode={}, errormessage={})".format(
-            self.error, self.errorcode, self.errormessage)
+        return (
+            "ErrorResponse(error={}, errorcode={}, errormessage={}"
+            ", errordetails={})"
+        ).format(self.error, self.errorcode, self.errormessage,
+                 self.errordetails)
 
 
 class Model(schematics.models.Model):
