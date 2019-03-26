@@ -11,14 +11,14 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = 'kaskuspy'
 DESCRIPTION = 'Kaskus Private API Wrapper'
-URL = 'https://github.com/cwkfr/kaskus-py'
+URL = 'https://github.com/Shivelight/kaskus-py'
 EMAIL = 'cwkfr@protonmail.com'
 AUTHOR = 'Arkie'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '1.0.1'
+VERSION = '1.1.1'
 
 REQUIRED = [
-    'requests', 'schematics'
+    'requests',
 ]
 
 here = os.path.abspath(os.path.dirname(__file__))
