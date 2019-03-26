@@ -2,11 +2,11 @@
 import requests
 
 from .hammer import prepare, make_query
-from .models import *
+from .exceptions import ErrorResponse
 
 API_BASE = "https://www.kaskus.co.id/api/oauth"
 HEADERS = {
-    "User-Agent": "Kaskus Android App 3.74.3",
+    "User-Agent": "Kaskus Android App 4.2.0",
     "Return-type": "text/json",
 }
 
@@ -51,24 +51,24 @@ class Kaskus(object):
     # Content
 
     def getCountries(self):
-        r = self._get("/v1/content/countries")
-        return LocationResponse(r)
+        result = self._get("/v1/content/countries")
+        return result
 
     def getDbUpdate(self):
-        r = self._get("/v1/dbupdate")
-        return DbUpdateResponse(r)
+        result = self._get("/v1/dbupdate")
+        return result
 
     def getHighlights(self):
-        r = self._get("/content/highlight")
-        return [HighlightResponse(x) for x in r]
+        result = self._get("/content/highlight")
+        return [highlight for highlight in result]
 
     def getProvincesForum(self):
-        r = self._get("/v1/content/locations")
-        return LocationResponse(r)
+        result = self._get("/v1/content/locations")
+        return result
 
     def getSmileys(self):
-        r = self._get("/content/smiley_mobile")
-        return [SmileyResponse(x) for x in r]
+        result = self._get("/content/smiley_mobile")
+        return [smiley for smiley in result]
 
     # Forum
 
@@ -76,25 +76,25 @@ class Kaskus(object):
         if query is None:
             query = make_query(sort="popular", order="desc", cursor="0",
                                limit=20)
-        r = self._get(f"/v1/forum/streams?category={category}&{query}")
-        return ForumStreamResponse(r)
+        result = self._get(f"/v1/forum/streams?category={category}&{query}")
+        return result
 
     def getThreadList(self, forumId, tags='', query=None):
         if query is None:
             query = make_query(page=1, limit=20)
-        r = self._get(f"/v1/forum/{forumId}/threads?include=preview&{query}"
-                      f"&tags={tags}")
-        return MultipleThreadListResponse(r)
+        result = self._get(f"/v1/forum/{forumId}/threads?include=preview&{query}"
+                           f"&tags={tags}")
+        return result
 
     # ForumList
 
     def getCategories(self):
-        r = self._get("/forumlist")
-        return [ForumListResponse(x) for x in r]
+        result = self._get("/forumlist")
+        return [forum_list for forum_list in result]
 
     def getFjbCategories(self):
-        r = self._get("/v1/categories")
-        return [ForumListResponse(x) for x in r]
+        result = self._get("/v1/categories")
+        return [forum_list for forum_list in result]
 
     # ForumThread
 
@@ -108,21 +108,21 @@ class Kaskus(object):
         if query is None:
             query = make_query(page=1, limit=20, expand_spoiler="true",
                                image="on")
-        r = self._get(f"/v1/forum_thread/{threadId}?field={field}"
-                      f"&include=similar&{query}")
-        return MultipleThreadResponse(r)
+        result = self._get(f"/v1/forum_thread/{threadId}?field={field}"
+                           f"&include=similar&{query}")
+        return result
 
     def getTopVideos(self):
-        r = self._get("/v1/top_videos")
-        return TopVideoResponse(r)
+        result = self._get("/v1/top_videos")
+        return result
 
     # HotThread
 
     def getHotThreads(self, query=None):
         if query is None:
             query = make_query(clean="forum_name,title")
-        r = self._get(f"/v1/hot_threads?{query}")
-        return MultipleHotThreadResponse(r)
+        result = self._get(f"/v1/hot_threads?{query}")
+        return result
 
     # Search
 
@@ -130,25 +130,25 @@ class Kaskus(object):
         if query is None:
             query = make_query(cursor="0", sort="lastpost", order="desc",
                                limit=20)
-        r = self._get(f"/search/forum?q={q}&{query}")
-        return SearchThreadResponse(r)
+        result = self._get(f"/search/forum?q={q}&{query}")
+        return result
 
     # SpecialEvent
 
     def getSpecialEvents(self, query=None):
         if query is None:
             query = make_query(resize_ratio="r")
-        r = self._get(f"/v1/kaskus/special_events?{query}")
-        return MultipleSpecialEventResponse(r)
+        result = self._get(f"/v1/kaskus/special_events?{query}")
+        return result
 
     # User
 
     def getForumCategoryPermission(self):
-        r = self._get("/v1/user/forum_permissions")
-        return CategoryPermission(r)
+        result = self._get("/v1/user/forum_permissions")
+        return result
 
     # Versions
 
     def checkVersion(self):
-        r = self._get("/v1/versions")
-        return VersionResponse(r)
+        result = self._get("/v1/versions")
+        return result

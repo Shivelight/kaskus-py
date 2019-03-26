@@ -70,13 +70,13 @@ def generate_header(parameters):
 
 
 def prepare(uri, method, key, consumer_secret, token, token_secret, data=None):
-        param = generate_param(key)
-        if token:
-            param['oauth_token'] = token
-        base = generate_base_string(method, uri, param, data)
-        sign = generate_signature(base, consumer_secret, token_secret)
-        param['oauth_signature'] = sign
-        return {"Authorization": generate_header(param)}
+    param = generate_param(key)
+    if token:
+        param['oauth_token'] = token
+    base = generate_base_string(method, uri, param, data)
+    sign = generate_signature(base, consumer_secret, token_secret)
+    param['oauth_signature'] = sign
+    return {"Authorization": generate_header(param)}
 
 
 def make_query(sort=None, order=None, page=None, cursor=None, limit=None,

@@ -1,1 +1,1 @@
-from .core import Kaskus
+from .core import Kaskus  # noqa
