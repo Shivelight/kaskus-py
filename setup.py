@@ -15,7 +15,7 @@ URL = 'https://github.com/Shivelight/kaskus-py'
 EMAIL = 'cwkfr@protonmail.com'
 AUTHOR = 'Arkie'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '1.1.1'
+VERSION = '1.1.2'
 
 REQUIRED = [
     'requests',
