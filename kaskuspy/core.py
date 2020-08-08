@@ -6,7 +6,7 @@ from .exceptions import ErrorResponse
 
 API_BASE = "https://www.kaskus.co.id/api/oauth"
 HEADERS = {
-    "User-Agent": "Kaskus Android App 4.2.0",
+    "User-Agent": "Kaskus Android App 4.16.1",
     "Return-type": "text/json",
 }
 
@@ -15,8 +15,8 @@ class Kaskus(object):
     """A Kaskus private API wrapper"""
 
     def __init__(self, token='', token_secret=''):
-        self.key = "52f7b01bce2f078a32d6b607e9af62"
-        self.secret = "38141e11206bbe0cb6b751280634b0"
+        self.key = "9db765473975ab0d8a7d440fd5c2c4"
+        self.secret = "5592768840df25fb4f112e45d67984"
         self.token = token
         self.token_secret = token_secret
 
